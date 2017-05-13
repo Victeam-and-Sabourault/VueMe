@@ -1,12 +1,19 @@
 <template>
   <div id="app">
+    <vue-me-header/>
     <router-view></router-view>
+    <voice-recognizer/>
   </div>
 </template>
 
 <script>
+import VoiceRecognizer from './commun/VoiceRecognizer.vue';
+import VueMeHeader from './commun/VueMeHeader.vue';
 export default {
-  name: 'app'
+  components: {
+    VoiceRecognizer,
+    VueMeHeader,
+  },
 }
 </script>
 
