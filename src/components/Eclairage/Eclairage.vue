@@ -1,22 +1,23 @@
 <template>
 <div>
-    <h1>Eclairage</h1>
+    <page-title titleImage="">Eclairage</page-title>
 </div>
 </template>
 
 <script>
-export default {
-        name: 'Eclairage',
-        data () {
-            return {
-            }
+    import PageTitle from '../Common/PageTitle'
+    export default {
+        components: {
+            PageTitle,
         },
-        created () {
+        data() {
+            return {}
         },
-        methods: {
-        }
+        created() {},
+        methods: {}
     }
 </script>
 
 <style scoped>
+
 </style>
