@@ -1,11 +1,11 @@
 <template>
 <div>
     <page-title titleImage="">Eclairage</page-title>
-    <ul>
-        <li v-for="option in options">
-            <eclairage-list-item :option="option"></eclairage-list-item>
-        </li>
-    </ul>
+    <md-list v-for="item in itemList">
+          <md-list-item class="md-inset">
+            <eclairage-list-item :item="item"></eclairage-list-item>              
+          </md-list-item>
+        </md-list>
 </div>
 </template>
 
@@ -18,7 +18,11 @@
             EclairageListItem,
         },
         data() {
-            return {}
+            return {
+                itemList: [{
+                    title: "Tous",
+                }]
+            }
         },
         created() {},
         methods: {}

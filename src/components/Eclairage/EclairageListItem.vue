@@ -1,14 +1,18 @@
 <template>
-<div class="pageTitle">
-    <h3 class ="title">{{ option.title }}</h3>
+<div class="item">
+    <h3 class ="title">{{ item.title }}</h3>
+    <md-switch v-model="checked" id="my-test" name="my-test" class="md-primary"></md-switch>
 </div>
 </template>
 
 <script>
     export default {
-        props: ['option'],
+        props: ['item'],
         data() {
-            return {}
+
+            return {
+                checked: false,
+            }
         },
     }
 </script>
