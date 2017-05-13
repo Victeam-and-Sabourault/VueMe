@@ -3,7 +3,7 @@
     <page-title titleImage="">Eclairage</page-title>
     <ul>
         <li v-for="option in options">
-            <option :option="option"></option>
+            <eclairage-list-item :option="option"></eclairage-list-item>
         </li>
     </ul>
 </div>
@@ -11,11 +11,11 @@
 
 <script>
     import PageTitle from '../Common/PageTitle'
-    import Option from './Option'
+    import EclairageListItem from './EclairageListItem'
     export default {
         components: {
             PageTitle,
-            Option,
+            EclairageListItem,
         },
         data() {
             return {}
