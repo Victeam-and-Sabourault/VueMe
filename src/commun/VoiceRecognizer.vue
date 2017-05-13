@@ -1,10 +1,10 @@
 <template>
 <div class="voice-recognizer-container">
     <div v-if="isSupported">
-        <button class="ic-voice-container" @click="listen">
+        <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../assets/icons/ic_voice.svg">
         </button>
-        <p v-if="transcription" class="transcription">{{ transcription }}</p>
+        <p :class="{active: transcription}" class="transcription">{{ transcription }}</p>
     </div>
     <div v-else>
         Your browser doesn't support speech recognition 😢
@@ -132,6 +132,7 @@ export default {
     align-items: center;
     border: none;
     box-sizing: border-box;
+    transition: all .3s ease-in-out;
 }
 
 .ic-voice-container.active {
@@ -154,10 +155,17 @@ export default {
 .transcription {
     text-align: center;
     font-family: Arial;
-    padding: 5px 10px;
     background: rgba(0,0,0,0.80);
     color: white;
     border-radius: 20px;
+    transform: translateY(20px);
+    transition: all .3s ease-in-out;
+    will-change: transform;
+}
+
+.transcription.active {
+    padding: 5px 10px;
+    transform: translateY(0px);
 }
 
 </style>
