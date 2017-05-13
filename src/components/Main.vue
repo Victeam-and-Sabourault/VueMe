@@ -7,6 +7,8 @@
     <div v-else>
         Your browser doesn't support speech recognition 😢
     </div>
+    <router-link to="/eclairage">Go to Eclairage</router-link>
+    <router-link to="/robotique">Go to Robotique</router-link>
 </div>
 </template>
 
