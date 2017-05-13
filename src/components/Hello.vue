@@ -11,6 +11,10 @@
 </template>
 
 <script>
+import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
+
+const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
+
 export default {
         name: 'VueJS',
         data () {
@@ -30,6 +34,7 @@ export default {
                 this.isSupported = false;
             } else {
                 this.recognizer = new window.SpeechRecognition();
+                this.recognizer.lang = 'fr-FR';
                 // Recogniser doesn't stop listening even if the user pauses
                 this.recognizer.continuous = true;
                 // interim results
@@ -38,13 +43,12 @@ export default {
                 this.recognizer.onresult = (event) => {
                     this.transcription = '';
                     for (let result of event.results) {
-                        if (result.isFinal) {
-                            console.log('Result! : ' + event.results)
-                            
-                            this.transcription = result[0].transcript + ' (Confidence: ' + result[0].confidence + ')';
-                        } else {
-                            this.transcription += result[0].transcript;
-                        }
+                      if(result.isFinal) {
+                        this.transcription = result[0].transcript;
+                        this.sendAction(result[0].transcript);
+                      } else {
+                        this.transcription += result[0].transcript;
+                      }
                     }
                 };
             }
@@ -69,16 +73,31 @@ export default {
             stop () {
                 this.recognizer.stop();
                 console.log('Recognition stopped');
-                this.sendAction();
             },
             sendAction () {
               console.log(this.transcription);
-                // const actions = commands.getActions(this.transcription);
-                // const lights = commands.getLights(this.transcription);
-                // const groups = commands.getGroups(this.transcription);
-                // commands.send(actions, lights, groups);
-            }
+              if (this.transcription.length < 1) {
+                this.transcription = 'Ok cool'
+              }
+              client.textRequest(this.transcription)
+                .then(resp => this.handleResponse(resp))
+                .then(() => { this.transcription = '' })
+                .catch(err => handleError(err))
+
+            },
+            handleResponse(res) {
+              console.log(res)
+              console.log(res.result.fulfillment.speech)
+              var msg = new SpeechSynthesisUtterance(res.result.fulfillment.speech);
+              msg.lang = 'fr-FR';
+              window.speechSynthesis.speak(msg);
+            },
+            handleError (err) {
+              this.transcription = '';
+              console.log(err)
+            } 
         }
+
     }
 </script>
 
