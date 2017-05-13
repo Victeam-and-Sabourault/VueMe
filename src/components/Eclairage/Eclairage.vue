@@ -1,7 +1,7 @@
 <template>
 <div>
     <page-title titleImage="">Eclairage</page-title>
-    <md-list v-for="item in itemList">
+    <md-list v-for="item in itemList" :key="item.title">
           <md-list-item class="md-inset">
             <eclairage-list-item :item="item"></eclairage-list-item>              
           </md-list-item>
