@@ -1,6 +1,6 @@
 <template>
 <div class="voice-recognizer-container">
-    <div v-if="isSupported">
+    <div class="vr-wrapper" v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
         </button>
@@ -83,7 +83,6 @@ export default {
               }
               client.textRequest(this.transcription)
                 .then(resp => this.handleResponse(resp))
-                .then(() => { setTimeout(() => this.transcription = '', 2000) })
                 .catch(err => handleError(err))
 
             },
@@ -94,6 +93,8 @@ export default {
               }
               var msg = new SpeechSynthesisUtterance(res.result.fulfillment.speech);
               msg.lang = 'fr-FR';
+              this.transcription = '▶ ' + res.result.fulfillment.speech;
+              setTimeout(() => this.transcription = '', 2000)
               window.speechSynthesis.speak(msg);
             },
             handleError (err) {
@@ -116,6 +117,12 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.vr-wrapper {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -158,14 +165,16 @@ export default {
     background: rgba(0,0,0,0.80);
     color: white;
     border-radius: 20px;
-    transform: translateY(20px);
     transition: all .3s ease-in-out;
     will-change: transform;
+    opacity: 0;
+    margin: 0;
 }
 
 .transcription.active {
     padding: 5px 10px;
-    transform: translateY(0px);
+    opacity: 1;
+    margin-bottom: 16px;
 }
 
 </style>
