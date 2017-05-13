@@ -1,10 +1,10 @@
 <template>
 <div>
     <ul class="menu-list">
-        <menu-list-item iconName="ic_voice" title="Éclairage" nbr="3" desc="Lampes connectées" route="/eclairage"/>
-        <menu-list-item iconName="ic_voice" title="Robotique" nbr="0" desc="Robot connecté" route="/robotique"/>
-        <menu-list-item iconName="ic_voice" title="Aspirateur" nbr="0" desc="Aspirateur connecté" route="/"/>
-        <menu-list-item iconName="ic_voice" title="Machine à café" nbr="0" desc="Machine à café connectée" route="/"/>
+        <menu-list-item iconName="ic_light" title="Éclairage" nbr="3" desc="Lampes connectées" route="/eclairage"/>
+        <menu-list-item iconName="ic_robot" title="Robotique" nbr="0" desc="Robot connecté" route="/robotique"/>
+        <menu-list-item iconName="ic_clean" title="Aspirateur" nbr="0" desc="Aspirateur connecté" route="/"/>
+        <menu-list-item iconName="ic_coffee" title="Machine à café" nbr="0" desc="Machine à café connectée" route="/"/>
     </ul>
 </div>
 </template>
