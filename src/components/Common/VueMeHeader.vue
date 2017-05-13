@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 h1 {
-    font-family: Roboto-Medium;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 20px;
     color: #4A4A4A;
 }

@@ -6,7 +6,7 @@
     <div class="menu-item-content">
         <h3>{{title}}</h3>
         <div class="menu-item-counter-container">
-            <div class="menu-item-counter">
+            <div class="menu-item-counter" :class="{empty: nbr <= 0}" >
                 {{nbr}}
             </div> 
             <div class="menu-item-counter-desc">
@@ -74,7 +74,7 @@ h3 {
 
 .menu-item-content {
     padding: 5px 10px;
-    font-family: AvenirNext-Medium;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 15px;
     color: #465565;
     display: flex;
@@ -83,7 +83,7 @@ h3 {
 
 .menu-item-counter-container {
     display: flex;
-    font-family: AvenirNext-Regular;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #586E75;
     align-items: center;
@@ -99,6 +99,10 @@ h3 {
     align-items: center;
     border-radius: 50%;
     margin-right: 5px;
+}
+
+.menu-item-counter.empty {
+    background-color: #BBB;
 }
 
 img {

@@ -161,7 +161,7 @@ export default {
 
 .transcription {
     text-align: center;
-    font-family: Arial;
+    font-family: Helvetica, Arial, sans-serif;
     background: rgba(0,0,0,0.80);
     color: white;
     border-radius: 20px;
