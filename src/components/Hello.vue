@@ -81,13 +81,15 @@ export default {
               }
               client.textRequest(this.transcription)
                 .then(resp => this.handleResponse(resp))
-                .then(() => { this.transcription = '' })
+                .then(() => { setTimeout(() => this.transcription = '', 2000) })
                 .catch(err => handleError(err))
 
             },
             handleResponse(res) {
               console.log(res)
-              console.log(res.result.fulfillment.speech)
+              if (res.result.action === 'turnOn') {
+                // send action to turn on light
+              }
               var msg = new SpeechSynthesisUtterance(res.result.fulfillment.speech);
               msg.lang = 'fr-FR';
               window.speechSynthesis.speak(msg);
