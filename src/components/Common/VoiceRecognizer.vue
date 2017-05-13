@@ -91,7 +91,6 @@ export default {
               }
               client.textRequest(this.transcription)
                 .then(resp => this.handleResponse(resp))
-                .then(() => { setTimeout(() => this.transcription = '', 2000) })
                 .catch(err => this.handleError(err))
 
             },
@@ -106,7 +105,7 @@ export default {
               } else if (res.result.action == 'music') {
                 this.playMusic()
               }
-              this.speak('▶ ' + res.result.fulfillment.speech);
+              this.speak(res.result.fulfillment.speech);
             },
             handleError (err) {
               this.transcription = '';
@@ -115,6 +114,8 @@ export default {
             speak(text, callback) {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
+              this.transcription = '▶ ' + text;
+              setTimeout(() => this.transcription = '', 3000);
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
             },
