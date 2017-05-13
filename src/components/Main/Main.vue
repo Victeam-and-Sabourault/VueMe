@@ -46,7 +46,7 @@ export default {
 }
 
 .logo-app {
-    margin-top: 15px;
+    margin: 20px 0px 7px 0px;
     max-width: 60%;
 }
 
