@@ -106,8 +106,10 @@ export default {
                 this.readLastMail()
               } else if (res.result.action === 'calendar') {
                 this.getNextEvent()
-              } else if (res.result.action == 'music') {
+              } else if (res.result.action === 'music') {
                 this.playMusic()
+              } else if (res.result.action === 'stop') {
+                this.stopMusic()
               }
               this.speak(res.result.fulfillment.speech);
             },
@@ -134,6 +136,9 @@ export default {
             },
             playMusic () {
               this.isPlayingMusic = true
+            },
+            stopMusic () {
+              this.isPlayingMusic = false
             }
         }
 
