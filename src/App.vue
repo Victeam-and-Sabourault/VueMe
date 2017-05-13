@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import VoiceRecognizer from './commun/VoiceRecognizer.vue';
-import VueMeHeader from './commun/VueMeHeader.vue';
+import VoiceRecognizer from './components/Common/VoiceRecognizer.vue';
+import VueMeHeader from './components/Common/VueMeHeader.vue';
 export default {
   components: {
     VoiceRecognizer,

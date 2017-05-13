@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from '@/components/Main'
+import Main from '@/components/Main/Main'
 import Robotique from '@/components/Robotique/Robotique'
 import Eclairage from '@/components/Eclairage/Eclairage'
 

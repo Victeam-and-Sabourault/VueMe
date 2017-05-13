@@ -2,7 +2,7 @@
 <div class="voice-recognizer-container">
     <div v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
-            <img class="ic-voice" src="../assets/icons/ic_voice.svg">
+            <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
         </button>
         <p :class="{active: transcription}" class="transcription">{{ transcription }}</p>
     </div>
