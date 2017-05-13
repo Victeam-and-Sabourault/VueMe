@@ -7,8 +7,11 @@
         <p :class="{active: transcription}" class="transcription">{{ transcription }}</p>
     </div>
     <div v-else>
-        Your browser doesn't support speech recognition 😢
+      Your browser doesn't support speech recognition 😢
     </div>
+    <audio autoplay controls v-if="isPlayingMusic">
+      <source src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3">
+    </audio>
 </div>
 </template>
 
@@ -32,7 +35,8 @@ export default {
                 events: [{
                   title: 'rendez-vous gynéco',
                   time: 'à 19 heure'
-                }]
+                }],
+                isPlayingMusic: false
             }
         },
         created () {
@@ -129,7 +133,7 @@ export default {
               this.speak('Vous avez ' + this.events[0].title + this.events[0].time)
             },
             playMusic () {
-              this.playMusic = true
+              this.isPlayingMusic = true
             }
         }
 
