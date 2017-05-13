@@ -25,6 +25,14 @@ export default {
                 isListening: false,
                 recognizer: null,
                 transcription: '',
+                mails: [{
+                  title: 'Bonjour le rendu',
+                  body: 'Cordialement, Adrien Redon'
+                }],
+                events: [{
+                  title: 'rendez-vous gynéco',
+                  time: 'à 19 heure'
+                }]
             }
         },
         created () {
@@ -83,24 +91,45 @@ export default {
               }
               client.textRequest(this.transcription)
                 .then(resp => this.handleResponse(resp))
-                .catch(err => handleError(err))
+                .then(() => { setTimeout(() => this.transcription = '', 2000) })
+                .catch(err => this.handleError(err))
 
             },
             handleResponse(res) {
               console.log(res)
               if (res.result.action === 'turnOn') {
                 // send action to turn on light
+              } else if (res.result.action === 'mail') {
+                this.readLastMail()
+              } else if (res.result.action === 'calendar') {
+                this.getNextEvent()
+              } else if (res.result.action == 'music') {
+                this.playMusic()
               }
-              var msg = new SpeechSynthesisUtterance(res.result.fulfillment.speech);
-              msg.lang = 'fr-FR';
-              this.transcription = '▶ ' + res.result.fulfillment.speech;
-              setTimeout(() => this.transcription = '', 2000)
-              window.speechSynthesis.speak(msg);
+              this.speak('▶ ' + res.result.fulfillment.speech);
             },
             handleError (err) {
               this.transcription = '';
               console.log(err)
-            } 
+            },
+            speak(text, callback) {
+              var msg = new SpeechSynthesisUtterance(text);
+              msg.lang = 'fr-FR';
+              window.speechSynthesis.speak(msg);
+              typeof callback === "function" ? callback() : null
+            },
+            readLastMail () {
+              this.speak(
+                'sujet du mail : ' + this.mails[this.mails.length - 1].title,
+                setTimeout(() => this.speak('corps du mail: ' + this.mails[this.mails.length - 1].body), 2000)
+                );  
+            },
+            getNextEvent () {
+              this.speak('Vous avez ' + this.events[0].title + this.events[0].time)
+            },
+            playMusic () {
+              this.playMusic = true
+            }
         }
 
     }
