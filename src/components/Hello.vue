@@ -1,34 +1,85 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div class="supported" v-if="isSupported">
+        <button :class="{'is-primary': isListening}" class="button is-large" @click="listen">🎤</button>
+        <p>{{ transcription }}</p>
+    </div>
+    <div class="not-supported" v-else>
+        Your browser doesn't support speech recognition 😢
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
-};
+        name: 'VueJS',
+        data () {
+            return {
+                isSupported: true,
+                isListening: false,
+                recognizer: null,
+                transcription: '',
+            }
+        },
+        created () {
+            // Test browser 
+            window.SpeechRecognition = window.SpeechRecognition ||
+                window.webkitSpeechRecognition  ||
+                null;
+            if (window.SpeechRecognition === null) {
+                this.isSupported = false;
+            } else {
+                this.recognizer = new window.SpeechRecognition();
+                // Recogniser doesn't stop listening even if the user pauses
+                this.recognizer.continuous = true;
+                // interim results
+                this.recognizer.interimResults = false;
+                // Start recognising
+                this.recognizer.onresult = (event) => {
+                    this.transcription = '';
+                    for (let result of event.results) {
+                        if (result.isFinal) {
+                            console.log('Result! : ' + event.results)
+                            
+                            this.transcription = result[0].transcript + ' (Confidence: ' + result[0].confidence + ')';
+                        } else {
+                            this.transcription += result[0].transcript;
+                        }
+                    }
+                };
+            }
+        },
+        methods: {
+            listen () {
+                if (this.isListening) {
+                    this.stop();
+                } else {
+                    this.play();
+                }
+                this.isListening = !this.isListening;
+            },
+            play () {
+                try{
+                  this.recognizer.start();
+                  console.log('Recognition started');
+               } catch(e) {
+                  console.log(e.message);
+               }
+            },
+            stop () {
+                this.recognizer.stop();
+                console.log('Recognition stopped');
+                this.sendAction();
+            },
+            sendAction () {
+              console.log(this.transcription);
+                // const actions = commands.getActions(this.transcription);
+                // const lights = commands.getLights(this.transcription);
+                // const groups = commands.getGroups(this.transcription);
+                // commands.send(actions, lights, groups);
+            }
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

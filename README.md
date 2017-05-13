@@ -1,4 +1,4 @@
-# vueme
+# vue-me
 
 > Home Assistant - VueJS
 
