@@ -1,13 +1,13 @@
 <template>
-  <div class="hello">
-    <div class="supported" v-if="isSupported">
-        <button :class="{'is-primary': isListening}" class="button is-large" @click="listen">🎤</button>
+<div>
+    <div v-if="isSupported">
+        <button @click="listen">LISTEN</button>
         <p>{{ transcription }}</p>
     </div>
-    <div class="not-supported" v-else>
+    <div v-else>
         Your browser doesn't support speech recognition 😢
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -84,21 +84,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
