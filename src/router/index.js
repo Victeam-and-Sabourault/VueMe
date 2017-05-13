@@ -11,20 +11,21 @@ Vue.use(VueMaterial)
 Vue.use(Router)
 
 export default new Router({
-    routes: [{
-            path: '/',
-            name: 'Main',
-            component: Main
-        },
-        {
-            path: '/robotique',
-            name: 'Robotique',
-            component: Robotique
-        },
-        {
-            path: '/eclairage',
-            name: 'Eclirage',
-            component: Eclairage
-        }
-    ]
+  routes: [
+    {
+      path: '/',
+      name: 'Main',
+      component: Main
+    },
+    {
+      path: '/robotique',
+      name: 'Robotique',
+      component: Robotique
+    },
+    {
+      path: '/eclairage',
+      name: 'Eclairage',
+      component: Eclairage
+    }
+  ]
 })
