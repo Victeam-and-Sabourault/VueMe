@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1637px" height="160px" viewBox="0 0 1637 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="1259.88012 -5.47117907e-13 1505.18243 95.4545455 1488.0655 95.4545455 1068.70096 95.4545455 892.601322 21.8672014 740.135539 21.7484907 563.751817 95.4545455 144.387273 95.4545455 127.270353 95.4545455 373.992496 -5.47117907e-13"></polygon>
+        <filter x="-3.2%" y="-44.5%" width="106.5%" height="193.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="14.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-3">
+            <g id="Group-8" transform="translate(0.000000, 60.000000)">
+                <g id="Triangle-Copy-2" transform="translate(816.226389, 47.727273) scale(1, -1) translate(-816.226389, -47.727273) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#465565" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <polygon id="Triangle-Copy" fill="#6FB485" transform="translate(818.104234, 50.000000) scale(1, -1) translate(-818.104234, -50.000000) " points="1636.20847 -7.81597009e-14 1636.20847 100 1488.0655 100 1329.24936 36.3636364 304.664933 36.3636364 144.387273 100 0 100 0 -7.81597009e-14"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

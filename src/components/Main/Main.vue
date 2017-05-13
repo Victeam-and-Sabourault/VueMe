@@ -1,5 +1,9 @@
 <template>
 <div>
+    <div class="home-banner">
+        <img class="logo-app" src="../../assets/icons/logo_app.svg"/>
+        <img class="img-vue-home" src="../../assets/icons/img_vue_home.svg"/>
+    </div>
     <ul class="menu-list">
         <menu-list-item iconName="ic_light" title="Éclairage" nbr="3" desc="Lampes connectées" route="/eclairage"/>
         <menu-list-item iconName="ic_robot" title="Robotique" nbr="0" desc="Robot connecté" route="/robotique"/>
@@ -32,5 +36,21 @@ export default {
     margin: 0;
     padding: 0;
     margin-top: 7px;
+}
+
+.home-banner {
+   background: #465565; 
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.logo-app {
+    margin-top: 15px;
+    max-width: 60%;
+}
+
+.img-vue-home {
+    width: 100%;
 }
 </style>
