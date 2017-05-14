@@ -1,14 +1,15 @@
 <template>
 <div class="voice-recognizer-container">
-    <docker category="Musique" v-if="isPlayingMusic">
+    <docker @close="isPlayingMusic=false" category="Musique" v-if="isPlayingMusic">
       <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
       </audio>
+      <img src="../../assets/image.jpg">
     </docker>
-    <docker category="Mail" v-if="isShowingMail">
+    <docker @close="isShowingMail=false" category="Mail" v-if="isShowingMail">
       <h3>Objet : {{ mails[0].title }}</h3>
       <p>Corps : {{ mails[0].body }}</p>
     </docker>
-    <docker category="Calendrier" v-if="isShowingCalendar">
+    <docker @close="isShowingCalendar=false" category="Calendrier" v-if="isShowingCalendar">
       <p>{{ events[0].title[0].toUpperCase() + events[0].title.slice(1) }} {{ events[0].time }}</p>
     </docker>
     <div class="vr-wrapper" v-if="isSupported">
