@@ -210,6 +210,8 @@ export default {
             speak(text, callback) {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
+              msg.pitch = 1.5;
+              msg.rate = 1.9;
               setTimeout(() => this.transcription = '', 3000)
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
