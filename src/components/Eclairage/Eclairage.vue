@@ -1,6 +1,6 @@
 <template>
 <div>
-    <page-title :titleImage="src">ECLAIRAGE</page-title>
+    <page-title :titleImage="src">ÉCLAIRAGE</page-title>
     <md-list v-for="item in itemList" :key="item.title">
           <md-list-item class="item-container">
             <eclairage-list-item :item="item"></eclairage-list-item>              
@@ -28,7 +28,7 @@
         },
         computed: {
             src() {
-                return require('../../assets/icons/ic_light.svg')
+                return require('../../assets/icons/ic_light_w.svg')
             }
         },
         created() {},

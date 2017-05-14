@@ -5,7 +5,7 @@
         <img class="img-vue-home" src="../../assets/icons/img_vue_home.svg"/>
     </div>
     <ul class="menu-list">
-        <menu-list-item iconName="ic_light" title="Éclairage" nbr="3" desc="Lampes connectées" route="/eclairage"/>
+        <menu-list-item iconName="ic_light" title="Éclairage" nbr="1" desc="Lampes connectées" route="/eclairage"/>
         <menu-list-item iconName="ic_robot" title="Robotique" nbr="0" desc="Robot connecté" route="/robotique"/>
         <menu-list-item iconName="ic_clean" title="Aspirateur" nbr="0" desc="Aspirateur connecté" route="/"/>
         <menu-list-item iconName="ic_coffee" title="Machine à café" nbr="0" desc="Machine à café connectée" route="/"/>
@@ -43,10 +43,12 @@ export default {
    display: flex;
    flex-direction: column;
    align-items: center;
+   justify-content: space-between;
+   height: 90px;
 }
 
 .logo-app {
-    margin: 20px 0px 7px 0px;
+    margin: 20px 0px 0px 0px;
     max-width: 60%;
 }
 

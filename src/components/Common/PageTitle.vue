@@ -3,8 +3,8 @@
     <div class="icon">
         <img :src="titleImage"></img>
     </div>
-    <div class="non-rectangle-icon">
-    </div>
+    <!--<div class="non-rectangle-icon">
+    </div>-->
     <h1 class="title"><slot></slot></h1>
 </div>
 </template>
@@ -22,7 +22,8 @@
     .pageTitle {
         background-color: #465565;
         display: flex;
-        height: 70px;
+        align-items: center;
+        height: 90px;
         overflow: hidden;
         box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
         cursor: pointer;
@@ -31,27 +32,27 @@
     
     .title {
         color: white;
-        padding: 5px 10px;
+        margin: 0;
+        padding: 0 10px;
         font-family: Helvetica, Arial, sans-serif;
         display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
     }
     
     .icon {
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-left: 15px;
-        background-color: #6FB485;
+        border-bottom: 90px solid #6FB485;
+        border-right: 50px solid transparent;
+        height: 0px;
+        width: 100px;   
+        -webkit-filter: drop-shadow(12px 10px 10px rgba(0, 0, 0, 0.4));
+        filter: drop-shadow(12px 10px 10px rgba(0, 0, 0, 0.4));
+        box-sizing: border-box;
     }
-    
-    .non-rectangle-icon {
-        width: 1px;
-        height: 100px;
-        border: 1px solid #6FB485;
-        border-color: transparent transparent transparent #6FB485;
-        border-width: 100px;
+
+    img {
+        width: 24px;
+        position: relative;
+        left: 20px;
+        bottom: -30px;
     }
+
 </style>

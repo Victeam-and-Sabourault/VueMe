@@ -1,6 +1,6 @@
 <template>
 <div>
-    <page-title titleImage="">Robotique</page-title>
+    <page-title :titleImage="src">ROBOTIQUE</page-title>
 </div>
 </template>
 
@@ -11,11 +11,16 @@
             PageTitle,
         },
         data() {
-            return {}
+            return {
+            }
+        },
+        computed: {
+            src() {
+                return require('../../assets/icons/ic_robot_w.svg')
+            }
         },
         created() {},
-        methods: {}
-
+        methods: {},
     }
 </script>
 
