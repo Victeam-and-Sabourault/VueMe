@@ -43,7 +43,7 @@ export default {
         },
         data () {
             return {
-                apiLights: 'http://192.168.137.7/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
+                apiLights: 'http://192.168.137.151/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
                 apiWeather: 'http://api.openweathermap.org/data/2.5/weather?APPID=ed79dba0a784436fb37d5680c23eac59&q=',
                 switchLight : false,
                 isSupported: true,

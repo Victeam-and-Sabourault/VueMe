@@ -32,7 +32,8 @@
                     {
                         title: "Fhacktory",
                     }
-                ]
+                ],
+                apiLights: 'http://192.168.137.151/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
             }
         },
         computed: {
@@ -44,13 +45,13 @@
         },
         methods: {
             bleu () {
-                axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 46920});
+                axios.put(this.apiLights+'/2/state', {on: this.switchLight, sat: 254, hue: 46920});
             },
             blanc () {
-                axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 100, hue: 10000});
+                axios.put(this.apiLights+'/2/state', {on: this.switchLight, sat: 100, hue: 10000});
             },
             rouge () {
-                axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 0});
+                axios.put(this.apiLights+'/2/state', {on: this.switchLight, sat: 254, hue: 0});
             },
         }
     }

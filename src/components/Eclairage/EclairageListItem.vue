@@ -12,7 +12,7 @@
         props: ['item'],
         data() {
             return {
-                apiLights: 'http://192.168.137.7/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
+                apiLights: 'http://192.168.137.151/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
                 switchLight : false,
             }
         },
