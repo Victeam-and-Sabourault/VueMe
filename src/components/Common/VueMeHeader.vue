@@ -35,6 +35,7 @@ h1 {
     align-items: center;
     padding: 2px 8px 2px 16px;
     justify-content: space-between;
+    position: relative;
     z-index: 1;
 }
 
