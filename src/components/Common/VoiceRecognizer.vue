@@ -182,6 +182,8 @@ export default {
                 this.playMusic()
               } else if (res.result.action === 'stop') {
                 this.stopMusic()
+              } else if (res.result.action === 'job') {
+                setTimeout(() => { window.location.href = 'http://lebrun.io' } , 2000);
               } else if (res.result.action === 'time') {
                 res.result.fulfillment.speech = this.sayTime()
               } else if (res.result.action === 'weather') {
