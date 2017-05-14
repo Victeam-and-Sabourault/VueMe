@@ -4,6 +4,13 @@
       <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
       </audio>
     </docker>
+    <docker category="Mail" v-if="isShowingMail">
+      <h3>Objet : {{ mails[0].title }}</h3>
+      <p>Corps : {{ mails[0].body }}</p>
+    </docker>
+    <docker category="Calendrier" v-if="isShowingCalendar">
+      <p>{{ events[0].title[0].toUpperCase() + events[0].title.slice(1) }} {{ events[0].time }}</p>
+    </docker>
     <div class="vr-wrapper" v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
@@ -38,14 +45,21 @@ export default {
                 recognizer: null,
                 transcription: '',
                 mails: [{
-                  title: 'Bonjour le rendu',
-                  body: 'Cordialement, Adrien Redon'
+                  title: 'Demande d\'entretien',
+                  body: 'Bonjour Monsieur,\nJe me permet de vous contacter bla-bla-bla\nCordialement, Adrien Redon'
                 }],
                 events: [{
                   title: 'rendez-vous gynéco',
-                  time: 'à 19 heure'
+                  time: 'à 19:00 !'
                 }],
-                isPlayingMusic: false
+                isPlayingMusic: false,
+                isShowingMail: false,
+                isShowingCalendar: false
+            }
+        },
+        computed: {
+            time () {
+              return moment().locale('fr').format('LT')
             }
         },
         created () {
@@ -109,6 +123,9 @@ export default {
             },
             handleResponse(res) {
               console.log(res)
+              this.isShowingMail = false;
+              this.isPlayingMusic = false;
+              this.isShowingCalendar = false;
               if (res.result.action === 'turnOn') {
                 var itemId = 2;
                 axios.get(this.apiLights)
@@ -123,8 +140,9 @@ export default {
               } else if (res.result.action === 'stop') {
                 this.stopMusic()
               } else if (res.result.action === 'time') {
-                this.sayTime()
+                res.result.fulfillment.speech = this.sayTime()
               }
+              this.transcription = res.result.fulfillment.speech;
               this.speak(res.result.fulfillment.speech);
             },
             handleError (err) {
@@ -134,18 +152,19 @@ export default {
             speak(text, callback) {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
-              this.transcription = text;
               setTimeout(() => this.transcription = '', 3000)
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
             },
             readLastMail () {
+              this.isShowingMail = true
               this.speak(
                 'sujet du mail : ' + this.mails[this.mails.length - 1].title,
                 setTimeout(() => this.speak('corps du mail: ' + this.mails[this.mails.length - 1].body), 2000)
                 );  
             },
             getNextEvent () {
+              this.isShowingCalendar = true;
               this.speak('Vous avez ' + this.events[0].title + this.events[0].time)
             },
             playMusic () {
@@ -155,7 +174,8 @@ export default {
               this.isPlayingMusic = false
             },
             sayTime () {
-              this.speak('Il est ' + moment().locale('fr').format('LT'))
+              this.isTimeKnown = true
+              return 'Il est ' + moment().locale('fr').format('LT')
             } 
         }
 

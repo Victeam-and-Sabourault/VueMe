@@ -23,6 +23,7 @@ export default {
 
 <style scoped>
 .docker {
+    width: 100%;
     position: fixed;
     bottom: 100px;
     background-color: white;
@@ -30,7 +31,6 @@ export default {
     flex-direction: column;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);
     cursor: pointer;
     transition: background-color .3s ease-in-out;
 }
@@ -44,8 +44,26 @@ export default {
 }
 
 .modal {
+    width: calc(100% - 32px);
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);
+    margin: 3px 16px;
+    padding: 10px;
     background-color: #fff;
     transition: all .3s ease-in-out;
+}
+
+.modal p {
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.full .modal p {
+    width: 100%;
+    white-space: normal;
+    text-overflow: unset;
+    overflow: visible;
 }
 
 .full .modal {
@@ -56,9 +74,8 @@ export default {
 
 h2 {
     text-align: center;
-}
-
-.content {
-    padding-top: 30px;
+    border-bottom: 1px solid #999;
+    margin-top: 0;
+    padding: 5px;
 }
 </style>
