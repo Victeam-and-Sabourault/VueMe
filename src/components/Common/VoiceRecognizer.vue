@@ -1,5 +1,9 @@
 <template>
 <div class="voice-recognizer-container">
+    <docker category="Musique" v-if="isPlayingMusic">
+      <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
+      </audio>
+    </docker>
     <div class="vr-wrapper" v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
@@ -9,19 +13,20 @@
     <div v-else>
       Your browser doesn't support speech recognition 😢
     </div>
-    <audio autoplay controls v-if="isPlayingMusic">
-      <source src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3">
-    </audio>
 </div>
 </template>
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
+import Docker from '@/components/Docker/Docker'
 
 const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
 
 export default {
         name: 'VueJS',
+        components: {
+          Docker,
+        },
         data () {
             return {
                 isSupported: true,
@@ -120,7 +125,7 @@ export default {
             speak(text, callback) {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
-              this.transcription = '▶ ' + text;
+              this.transcription = text;
               setTimeout(() => this.transcription = '', 3000);
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
@@ -155,6 +160,11 @@ export default {
     bottom: 0;
     width: 100%;
     display: flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
