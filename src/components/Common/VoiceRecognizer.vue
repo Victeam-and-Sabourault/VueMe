@@ -17,6 +17,7 @@
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
+import axios from 'axios'
 
 const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
 
@@ -24,6 +25,8 @@ export default {
         name: 'VueJS',
         data () {
             return {
+                apiLights: 'http://192.168.137.80/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
+                switchLight : false,
                 isSupported: true,
                 isListening: false,
                 recognizer: null,
@@ -101,7 +104,10 @@ export default {
             handleResponse(res) {
               console.log(res)
               if (res.result.action === 'turnOn') {
-                // send action to turn on light
+                var itemId = 2;
+                axios.get(this.apiLights)
+                    .then(response => this.switchLight = !response.data[itemId].state.on)
+                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight}));
               } else if (res.result.action === 'mail') {
                 this.readLastMail()
               } else if (res.result.action === 'calendar') {

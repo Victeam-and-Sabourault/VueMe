@@ -22,7 +22,8 @@
                 itemList: [{
                     title: "Tous",
                 }, {
-                    title: "Salon",
+                    title: "Fhacktory",
+                    lightNumber: 2,
                 }]
             }
         },
