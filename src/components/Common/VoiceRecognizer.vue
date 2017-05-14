@@ -1,5 +1,9 @@
 <template>
 <div class="voice-recognizer-container">
+    <docker category="Musique" v-if="isPlayingMusic">
+      <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
+      </audio>
+    </docker>
     <div class="vr-wrapper" v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
@@ -9,20 +13,22 @@
     <div v-else>
       Your browser doesn't support speech recognition 😢
     </div>
-    <audio autoplay controls v-if="isPlayingMusic">
-      <source src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3">
-    </audio>
 </div>
 </template>
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
 import axios from 'axios'
+import Docker from '@/components/Docker/Docker'
+import moment from 'moment'
 
 const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
 
 export default {
         name: 'VueJS',
+        components: {
+          Docker,
+        },
         data () {
             return {
                 apiLights: 'http://192.168.137.80/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
@@ -43,32 +49,32 @@ export default {
             }
         },
         created () {
-            // Test browser 
-            window.SpeechRecognition = window.SpeechRecognition ||
-                window.webkitSpeechRecognition  ||
-                null;
-            if (window.SpeechRecognition === null) {
-                this.isSupported = false;
-            } else {
-                this.recognizer = new window.SpeechRecognition();
-                this.recognizer.lang = 'fr-FR';
-                // Recogniser doesn't stop listening even if the user pauses
-                this.recognizer.continuous = true;
-                // interim results
-                this.recognizer.interimResults = false;
-                // Start recognising
-                this.recognizer.onresult = (event) => {
-                    this.transcription = '';
-                    for (let result of event.results) {
-                      if(result.isFinal) {
-                        this.transcription = result[0].transcript;
-                        this.sendAction(result[0].transcript);
-                      } else {
-                        this.transcription += result[0].transcript;
-                      }
+          // Test browser 
+          window.SpeechRecognition = window.SpeechRecognition ||
+              window.webkitSpeechRecognition  ||
+              null;
+          if (window.SpeechRecognition === null) {
+              this.isSupported = false;
+          } else {
+              this.recognizer = new window.SpeechRecognition();
+              this.recognizer.lang = 'fr-FR';
+              // Recogniser doesn't stop listening even if the user pauses
+              this.recognizer.continuous = true;
+              // interim results
+              this.recognizer.interimResults = false;
+              // Start recognising
+              this.recognizer.onresult = (event) => {
+                  this.transcription = '';
+                  for (let result of event.results) {
+                    if(result.isFinal) {
+                      this.transcription = result[0].transcript;
+                      this.sendAction(result[0].transcript);
+                    } else {
+                      this.transcription += result[0].transcript;
                     }
-                };
-            }
+                  }
+              };
+          }
         },
         methods: {
             listen () {
@@ -116,6 +122,8 @@ export default {
                 this.playMusic()
               } else if (res.result.action === 'stop') {
                 this.stopMusic()
+              } else if (res.result.action === 'time') {
+                this.sayTime()
               }
               this.speak(res.result.fulfillment.speech);
             },
@@ -126,8 +134,8 @@ export default {
             speak(text, callback) {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
-              this.transcription = '▶ ' + text;
-              setTimeout(() => this.transcription = '', 3000);
+              this.transcription = text;
+              setTimeout(() => this.transcription = '', 3000)
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
             },
@@ -145,7 +153,10 @@ export default {
             },
             stopMusic () {
               this.isPlayingMusic = false
-            }
+            },
+            sayTime () {
+              this.speak('Il est ' + moment().locale('fr').format('LT'))
+            } 
         }
 
     }
@@ -161,6 +172,11 @@ export default {
     bottom: 0;
     width: 100%;
     display: flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
