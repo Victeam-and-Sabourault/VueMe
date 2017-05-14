@@ -31,7 +31,6 @@ export default {
     width: 100%;
     position: fixed;
     bottom: 100px;
-    background-color: white;
     display: flex;
     flex-direction: column;
     border-radius: 3px;

@@ -12,6 +12,10 @@
     <docker @close="isShowingCalendar=false" category="Calendrier" v-if="isShowingCalendar">
       <p>{{ events[0].title[0].toUpperCase() + events[0].title.slice(1) }} {{ events[0].time }}</p>
     </docker>
+    <docker @close="isShowingWeather=false" category="Météo" v-if="isShowingWeather">
+      <h3>La température à {{ weather.city }} est de {{ weatherTemp }}°</h3>
+      <img :src="weatherIcon">
+    </docker>
     <div class="vr-wrapper" v-if="isSupported">
         <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
             <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
@@ -54,14 +58,26 @@ export default {
                   title: 'rendez-vous gynéco',
                   time: 'à 19:00 !'
                 }],
+                weather: {
+                  city: 'Lyon',
+                  temp: 0,
+                  icon: '',
+                },
                 isPlayingMusic: false,
                 isShowingMail: false,
-                isShowingCalendar: false
+                isShowingCalendar: false,
+                isShowingWeather: false
             }
         },
         computed: {
             time () {
               return moment().locale('fr').format('LT')
+            },
+            weatherIcon () {
+              return 'http://openweathermap.org/img/w/' + this.weather.icon + '.png'
+            },
+            weatherTemp () {
+              return parseInt(this.weather.temp) - 273
             }
         },
         created () {
@@ -128,6 +144,7 @@ export default {
               this.isShowingMail = false;
               this.isPlayingMusic = false;
               this.isShowingCalendar = false;
+              this.isShowingWeather = false;
               if (res.result.action === 'turnOn') {
                 var itemId = 2;
                 
@@ -168,10 +185,19 @@ export default {
               } else if (res.result.action === 'time') {
                 res.result.fulfillment.speech = this.sayTime()
               } else if (res.result.action === 'weather') {
-                  axios.get(this.apiWeather + res.result.fulfillment.messages[0].payload.city)
+                let city;
+                    if (res.result.fulfillment.messages[0].payload.city && res.result.fulfillment.messages[0].payload.city != '') {
+                      city = res.result.fulfillment.messages[0].payload.city;
+                    } else {
+                      city = 'Lyon'
+                    }
+                  axios.get(this.apiWeather + city)
                   .then(response => {
-                      console.log(response)
-                    this.speak('Il fait ' + parseInt(response.data.main.temp - 273) + ' degrés à ' + res.result.fulfillment.messages[0].payload.city )
+                    this.isShowingWeather = true;
+                    this.weather.city = city;
+                    this.weather.temp = response.data.main.temp;
+                    this.weather.icon = response.data.weather[0].icon;
+                    this.speak('Il fait ' + parseInt(response.data.main.temp - 273) + ' degrés à ' + city)
                   })
               }
               this.transcription = res.result.fulfillment.speech;
