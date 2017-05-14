@@ -33,6 +33,10 @@ html, body {
   background-color: #F5F5F5;
 }
 
+body.md-theme-default {
+  background-color: #F5F5F5 !important;
+}
+
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -43,4 +47,5 @@ html, body {
   transform: translateX(-320px);
   opacity: 0;
 }
+
 </style>

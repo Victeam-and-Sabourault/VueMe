@@ -44,7 +44,7 @@ export default {
    flex-direction: column;
    align-items: center;
    justify-content: space-between;
-   height: 90px;
+   min-height: 90px;
 }
 
 .logo-app {

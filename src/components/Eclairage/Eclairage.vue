@@ -1,11 +1,11 @@
 <template>
 <div>
     <page-title :titleImage="src">ÉCLAIRAGE</page-title>
-    <md-list v-for="item in itemList" :key="item.title">
-          <md-list-item class="item-container">
-            <eclairage-list-item :item="item"></eclairage-list-item>              
-          </md-list-item>
-        </md-list>
+    <md-list class="list-container" v-for="item in itemList" :key="item.title">
+        <md-list-item class="item-container">
+        <eclairage-list-item :item="item"></eclairage-list-item>              
+        </md-list-item>
+    </md-list>
 </div>
 </template>
 
@@ -19,12 +19,11 @@
         },
         data() {
             return {
-                itemList: [{
-                    title: "Tous",
-                }, {
-                    title: "Fhacktory",
-                    lightNumber: 2,
-                }]
+                itemList: [
+                    {
+                        title: "Fhacktory",
+                    }
+                ]
             }
         },
         computed: {
@@ -41,4 +40,10 @@
     .item-container {
         border-bottom: 1px solid #c8c8c8;
     }
+
+    .list-container {
+        padding: 0;
+        margin-top: 10px;
+    }
+
 </style>
