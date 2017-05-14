@@ -19,6 +19,7 @@
 <script>
 import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
 import Docker from '@/components/Docker/Docker'
+import moment from 'moment'
 
 const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
 
@@ -45,32 +46,32 @@ export default {
             }
         },
         created () {
-            // Test browser 
-            window.SpeechRecognition = window.SpeechRecognition ||
-                window.webkitSpeechRecognition  ||
-                null;
-            if (window.SpeechRecognition === null) {
-                this.isSupported = false;
-            } else {
-                this.recognizer = new window.SpeechRecognition();
-                this.recognizer.lang = 'fr-FR';
-                // Recogniser doesn't stop listening even if the user pauses
-                this.recognizer.continuous = true;
-                // interim results
-                this.recognizer.interimResults = false;
-                // Start recognising
-                this.recognizer.onresult = (event) => {
-                    this.transcription = '';
-                    for (let result of event.results) {
-                      if(result.isFinal) {
-                        this.transcription = result[0].transcript;
-                        this.sendAction(result[0].transcript);
-                      } else {
-                        this.transcription += result[0].transcript;
-                      }
+          // Test browser 
+          window.SpeechRecognition = window.SpeechRecognition ||
+              window.webkitSpeechRecognition  ||
+              null;
+          if (window.SpeechRecognition === null) {
+              this.isSupported = false;
+          } else {
+              this.recognizer = new window.SpeechRecognition();
+              this.recognizer.lang = 'fr-FR';
+              // Recogniser doesn't stop listening even if the user pauses
+              this.recognizer.continuous = true;
+              // interim results
+              this.recognizer.interimResults = false;
+              // Start recognising
+              this.recognizer.onresult = (event) => {
+                  this.transcription = '';
+                  for (let result of event.results) {
+                    if(result.isFinal) {
+                      this.transcription = result[0].transcript;
+                      this.sendAction(result[0].transcript);
+                    } else {
+                      this.transcription += result[0].transcript;
                     }
-                };
-            }
+                  }
+              };
+          }
         },
         methods: {
             listen () {
@@ -115,6 +116,8 @@ export default {
                 this.playMusic()
               } else if (res.result.action === 'stop') {
                 this.stopMusic()
+              } else if (res.result.action === 'time') {
+                this.sayTime()
               }
               this.speak(res.result.fulfillment.speech);
             },
@@ -126,7 +129,7 @@ export default {
               var msg = new SpeechSynthesisUtterance(text);
               msg.lang = 'fr-FR';
               this.transcription = text;
-              setTimeout(() => this.transcription = '', 3000);
+              setTimeout(() => this.transcription = '', 3000)
               window.speechSynthesis.speak(msg);
               typeof callback === "function" ? callback() : null
             },
@@ -144,7 +147,10 @@ export default {
             },
             stopMusic () {
               this.isPlayingMusic = false
-            }
+            },
+            sayTime () {
+              this.speak('Il est ' + moment().locale('fr').format('LT'))
+            } 
         }
 
     }
