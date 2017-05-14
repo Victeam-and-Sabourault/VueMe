@@ -39,7 +39,8 @@ export default {
         },
         data () {
             return {
-                apiLights: 'http://192.168.137.80/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
+                apiLights: 'http://192.168.137.7/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
+                apiWeather: 'http://api.openweathermap.org/data/2.5/weather?APPID=ed79dba0a784436fb37d5680c23eac59&q=',
                 switchLight : false,
                 isSupported: true,
                 isListening: false,
@@ -129,9 +130,33 @@ export default {
               this.isShowingCalendar = false;
               if (res.result.action === 'turnOn') {
                 var itemId = 2;
-                axios.get(this.apiLights)
+                
+                switch(res.result.fulfillment.messages[0].payload.color){
+                    case 'rouge':
+                    axios.get(this.apiLights)
                     .then(response => this.switchLight = !response.data[itemId].state.on)
-                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight}));
+                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 0}));
+                    break;
+                    case 'bleu':
+                    case 'bleue':                    
+                    axios.get(this.apiLights)
+                    .then(response => this.switchLight = !response.data[itemId].state.on)
+                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 46920}));
+                    break;
+
+                    case 'aléatoire':
+                    axios.get(this.apiLights)
+                    .then(response => this.switchLight = !response.data[itemId].state.on)
+                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 122, effect: "colorloop"}));
+                    break;
+
+                    default: axios.get(this.apiLights)
+                    .then(response => this.switchLight = !response.data[itemId].state.on)
+                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 100, hue: 10000}));
+                    break;
+                }
+
+                
               } else if (res.result.action === 'mail') {
                 this.readLastMail()
               } else if (res.result.action === 'calendar') {
@@ -142,6 +167,12 @@ export default {
                 this.stopMusic()
               } else if (res.result.action === 'time') {
                 res.result.fulfillment.speech = this.sayTime()
+              } else if (res.result.action === 'weather') {
+                  axios.get(this.apiWeather + res.result.fulfillment.messages[0].payload.city)
+                  .then(response => {
+                      console.log(response)
+                    this.speak('Il fait ' + parseInt(response.data.main.temp - 273) + ' degrés à ' + res.result.fulfillment.messages[0].payload.city )
+                  })
               }
               this.transcription = res.result.fulfillment.speech;
               this.speak(res.result.fulfillment.speech);

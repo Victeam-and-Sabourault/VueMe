@@ -17,9 +17,15 @@
             }
         },
         created() {
-            this.switchTheLight();
+            this.getTheLight();
         },
         methods : {
+            getTheLight(){
+                var itemId = 2; //Hasto be 2 cause that's the light bulb ID
+                axios.get(this.apiLights)
+                    .then(response => this.switchLight = response.data[itemId].state.on);
+            },
+
             switchTheLight(){
                 var itemId = 2; //Hasto be 2 cause that's the light bulb ID
                 axios.get(this.apiLights)
