@@ -19,7 +19,6 @@
 <script>
 import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
 import axios from 'axios'
-import Docker from '@/components/Docker/Docker'
 import CalendarCard from '@/components/Calendar/Calendar'
 import MailCard from '@/components/Mail/Mail'
 import MusicCard from '@/components/Music/Music'
@@ -32,7 +31,6 @@ const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'}
 export default {
   name: 'VueJS',
   components: {
-    Docker,
     CalendarCard,
     MailCard,
     MusicCard,
@@ -61,7 +59,7 @@ export default {
       isPlayingMusic: false,
       isShowingMail: false,
       isShowingCalendar: false,
-      isShowingWeather: true
+      isShowingWeather: false
     }
   },
   computed: {
