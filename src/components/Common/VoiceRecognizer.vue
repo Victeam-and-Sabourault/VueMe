@@ -1,5 +1,5 @@
 <template>
-<div class="voice-recognizer-container">
+  <div class="voice-recognizer-container">
     <docker @close="isPlayingMusic=false" category="Musique" v-if="isPlayingMusic">
       <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
       </audio>
@@ -17,15 +17,15 @@
       <img :src="weatherIcon">
     </docker>
     <div class="vr-wrapper" v-if="isSupported">
-        <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
-            <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
-        </button>
-        <p :class="{active: transcription}" class="transcription">{{ transcription }}</p>
+      <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
+        <img class="ic-voice" src="../../assets/icons/ic_voice.svg">
+      </button>
+      <p :class="{active: transcription}" class="transcription">{{ transcription }}</p>
     </div>
     <div v-else>
       Your browser doesn't support speech recognition 😢
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -33,101 +33,100 @@ import { ApiAiClient } from 'api-ai-javascript/ApiAiClient'
 import axios from 'axios'
 import Docker from '@/components/Docker/Docker'
 import moment from 'moment'
+import lights from '@/utils/lights'
 
 const client = new ApiAiClient({accessToken: '53002c34bea24a65afd849611e96531e'});
 
 export default {
-        name: 'VueJS',
-        components: {
-          Docker,
-        },
-        data () {
-            return {
-                apiLights: 'http://192.168.137.151/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
-                apiWeather: 'http://api.openweathermap.org/data/2.5/weather?APPID=ed79dba0a784436fb37d5680c23eac59&q=',
-                switchLight : false,
-                isSupported: true,
-                isListening: false,
-                recognizer: null,
-                transcription: '',
-                mails: [{
-                  title: 'Demande d\'entretien',
-                  body: 'Bonjour Monsieur,\nJe me permet de vous contacter bla-bla-bla\nCordialement, Adrien Redon'
-                }],
-                events: [{
-                  title: 'rendez-vous gynéco',
-                  time: 'à 19:00 !'
-                }],
-                weather: {
-                  city: 'Lyon',
-                  temp: 0,
-                  icon: '',
-                },
-                isPlayingMusic: false,
-                isShowingMail: false,
-                isShowingCalendar: false,
-                isShowingWeather: false
-            }
-        },
-        computed: {
-            time () {
-              return moment().locale('fr').format('LT')
-            },
-            weatherIcon () {
-              return 'http://openweathermap.org/img/w/' + this.weather.icon + '.png'
-            },
-            weatherTemp () {
-              return parseInt(this.weather.temp) - 273
-            }
-        },
-        created () {
+  name: 'VueJS',
+  components: {
+    Docker,
+  },
+  data () {
+    return {
+      apiWeather: 'http://api.openweathermap.org/data/2.5/weather?APPID=ed79dba0a784436fb37d5680c23eac59&q=',
+      isSupported: true,
+      isListening: false,
+      recognizer: null,
+      transcription: '',
+      mails: [{
+        title: 'Demande d\'entretien',
+        body: 'Bonjour Monsieur,\nJe me permet de vous contacter bla-bla-bla\nCordialement, Adrien Redon'
+      }],
+      events: [{
+        title: 'rendez-vous gynéco',
+        time: 'à 19:00 !'
+      }],
+      weather: {
+        city: 'Lyon',
+        temp: 0,
+        icon: '',
+      },
+      isPlayingMusic: false,
+      isShowingMail: false,
+      isShowingCalendar: false,
+      isShowingWeather: false
+    }
+  },
+  computed: {
+    time () {
+      return moment().locale('fr').format('LT')
+    },
+    weatherIcon () {
+      return 'http://openweathermap.org/img/w/' + this.weather.icon + '.png'
+    },
+    weatherTemp () {
+      return parseInt(this.weather.temp) - 273
+    }
+  },
+  created () {
           // Test browser 
           window.SpeechRecognition = window.SpeechRecognition ||
-              window.webkitSpeechRecognition  ||
-              null;
+          window.webkitSpeechRecognition  ||
+          null;
           if (window.SpeechRecognition === null) {
-              this.isSupported = false;
+            this.isSupported = false;
           } else {
-              this.recognizer = new window.SpeechRecognition();
-              this.recognizer.lang = 'fr-FR';
+            this.recognizer = new window.SpeechRecognition();
+            this.recognizer.lang = 'fr-FR';
               // Recogniser doesn't stop listening even if the user pauses
               this.recognizer.continuous = true;
               // interim results
               this.recognizer.interimResults = false;
               // Start recognising
               this.recognizer.onresult = (event) => {
-                  this.transcription = '';
-                  for (let result of event.results) {
-                    if(result.isFinal) {
-                      this.transcription = result[0].transcript;
-                      this.sendAction(result[0].transcript);
-                    } else {
-                      this.transcription += result[0].transcript;
-                    }
+                this.transcription = '';
+                for (let result of event.results) {
+                  if(result.isFinal) {
+                    this.transcription = result[0].transcript;
+                    this.sendAction(result[0].transcript);
+                  } else {
+                    this.transcription += result[0].transcript;
                   }
-              };
-          }
-        },
-        methods: {
-            listen () {
-                if (this.isListening) {
-                    this.stop();
-                } else {
-                    this.play();
                 }
-                this.isListening = !this.isListening;
+              };
+            }
+          },
+          methods: {
+            listen () {
+              if (this.isListening) {
+                this.stop();
+              } else {
+                this.play();
+              }
+              this.isListening = !this.isListening;
             },
             play () {
-                try{
-                  this.recognizer.start();
-                  console.log('Recognition started');
-               } catch(e) {
-                  console.log(e.message);
-               }
+              try{
+                this.recognizer.start();
+                console.log('Recognition started');
+              } catch(e) {
+                console.log(e.message);
+              }
             },
             stop () {
-                this.recognizer.stop();
-                console.log('Recognition stopped');
+              this.recognizer.stop();
+              console.log('Recognition stopped');
             },
             sendAction () {
               console.log(this.transcription);
@@ -135,8 +134,8 @@ export default {
                 this.transcription = 'Ok cool'
               }
               client.textRequest(this.transcription)
-                .then(resp => this.handleResponse(resp))
-                .catch(err => this.handleError(err))
+              .then(resp => this.handleResponse(resp))
+              .catch(err => this.handleError(err))
 
             },
             handleResponse(res) {
@@ -146,34 +145,9 @@ export default {
               this.isShowingCalendar = false;
               this.isShowingWeather = false;
               if (res.result.action === 'turnOn') {
-                var itemId = 2;
-                
-                switch(res.result.fulfillment.messages[0].payload.color){
-                    case 'rouge':
-                    axios.get(this.apiLights)
-                    .then(response => this.switchLight = !response.data[itemId].state.on)
-                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 0}));
-                    break;
-                    case 'bleu':
-                    case 'bleue':                    
-                    axios.get(this.apiLights)
-                    .then(response => this.switchLight = !response.data[itemId].state.on)
-                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 254, hue: 46920}));
-                    break;
-
-                    case 'aléatoire':
-                    axios.get(this.apiLights)
-                    .then(response => this.switchLight = !response.data[itemId].state.on)
-                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 122, effect: "colorloop"}));
-                    break;
-
-                    default: axios.get(this.apiLights)
-                    .then(response => this.switchLight = !response.data[itemId].state.on)
-                    .then(() => axios.put(this.apiLights+'/'+itemId + '/state', {on: this.switchLight, sat: 100, hue: 10000}));
-                    break;
-                }
-
-                
+                lights.turnOn(res.result.fulfillment.messages[0].payload.color)
+              } else if (res.result.action === 'turnOff') {
+                lights.turnOff()
               } else if (res.result.action === 'mail') {
                 this.readLastMail()
               } else if (res.result.action === 'calendar') {
@@ -188,19 +162,19 @@ export default {
                 res.result.fulfillment.speech = this.sayTime()
               } else if (res.result.action === 'weather') {
                 let city;
-                    if (res.result.fulfillment.messages[0].payload.city && res.result.fulfillment.messages[0].payload.city != '') {
-                      city = res.result.fulfillment.messages[0].payload.city;
-                    } else {
-                      city = 'Lyon'
-                    }
-                  axios.get(this.apiWeather + city)
-                  .then(response => {
-                    this.isShowingWeather = true;
-                    this.weather.city = city;
-                    this.weather.temp = response.data.main.temp;
-                    this.weather.icon = response.data.weather[0].icon;
-                    this.speak('Il fait ' + parseInt(response.data.main.temp - 273) + ' degrés à ' + city)
-                  })
+                if (res.result.fulfillment.messages[0].payload.city && res.result.fulfillment.messages[0].payload.city != '') {
+                  city = res.result.fulfillment.messages[0].payload.city;
+                } else {
+                  city = 'Lyon'
+                }
+                axios.get(this.apiWeather + city)
+                .then(response => {
+                  this.isShowingWeather = true;
+                  this.weather.city = city;
+                  this.weather.temp = response.data.main.temp;
+                  this.weather.icon = response.data.weather[0].icon;
+                  this.speak('Il fait ' + parseInt(response.data.main.temp - 273) + ' degrés à ' + city)
+                })
               }
               this.transcription = res.result.fulfillment.speech;
               this.speak(res.result.fulfillment.speech);
@@ -238,86 +212,86 @@ export default {
             sayTime () {
               this.isTimeKnown = true
               return 'Il est ' + moment().locale('fr').format('LT')
-            } 
+            }
+          }
+
+        }
+        </script>
+
+        <style scoped>
+        .flex {
+          display: flex;
         }
 
-    }
-</script>
+        .voice-recognizer-container {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          display: flex;
+          -webkit-flex-direction: column;
+          -moz-flex-direction: column;
+          -ms-flex-direction: column;
+          -o-flex-direction: column;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
 
-<style scoped>
-.flex {
-    display: flex;
-}
+        .vr-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
 
-.voice-recognizer-container {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    -webkit-flex-direction: column;
-    -moz-flex-direction: column;
-    -ms-flex-direction: column;
-    -o-flex-direction: column;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        .ic-voice-container {
+          padding: 0;
+          border-radius: 50%;
+          background: #465565;
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.78);
+          margin: 16px;
+          height: 56px;
+          width: 56px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          box-sizing: border-box;
+          transition: all .3s ease-in-out;
+        }
 
-.vr-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .ic-voice-container.active {
+          background-color: #6FB485;
+        }
 
-.ic-voice-container {
-    padding: 0;
-    border-radius: 50%;
-    background: #465565;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.78);
-    margin: 16px;
-    height: 56px;
-    width: 56px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    box-sizing: border-box;
-    transition: all .3s ease-in-out;
-}
+        .ic-voice-container:focus {
+          outline: 0;
+        }
 
-.ic-voice-container.active {
-    background-color: #6FB485;
-}
+        .ic-voice-container:active {
+          background-color: #29333D;
+        }
 
-.ic-voice-container:focus {
-    outline: 0;
-}
+        .ic-voice {
+          height: 56px;
+          width: 56px;
+        }
 
-.ic-voice-container:active {
-    background-color: #29333D;
-}
+        .transcription {
+          text-align: center;
+          font-family: Helvetica, Arial, sans-serif;
+          background: rgba(0,0,0,0.80);
+          color: white;
+          border-radius: 20px;
+          transition: all .3s ease-in-out;
+          will-change: transform;
+          opacity: 0;
+          margin: 0;
+        }
 
-.ic-voice {
-    height: 56px;
-    width: 56px;
-}
+        .transcription.active {
+          padding: 5px 10px;
+          opacity: 1;
+          margin-bottom: 16px;
+        }
 
-.transcription {
-    text-align: center;
-    font-family: Helvetica, Arial, sans-serif;
-    background: rgba(0,0,0,0.80);
-    color: white;
-    border-radius: 20px;
-    transition: all .3s ease-in-out;
-    will-change: transform;
-    opacity: 0;
-    margin: 0;
-}
-
-.transcription.active {
-    padding: 5px 10px;
-    opacity: 1;
-    margin-bottom: 16px;
-}
-
-</style>
+        </style>
