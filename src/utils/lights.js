@@ -5,6 +5,7 @@ export default {
     {'rouge': {on: true, sat: 254, hue: 0}},
     {'bleue': {on: true, sat: 254, hue: 46920}},
     {'bleu': {on: true, sat: 254, hue: 46920}},
+    {'blanc': {on: true, sat: 254, hue: 10000}},
     {'aléatoire': {on: true, sat: 122, effect: "colorloop"}}
   ],
   apiLights: 'http://192.168.137.7/api/9aG5iH8uo4Vea7oRFxXF2iAibQTRr57qrRSRRnO1/lights',
