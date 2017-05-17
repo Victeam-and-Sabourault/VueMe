@@ -3,8 +3,6 @@
     <div class="icon">
         <img :src="titleImage"></img>
     </div>
-    <!--<div class="non-rectangle-icon">
-    </div>-->
     <h1 class="title"><slot></slot></h1>
 </div>
 </template>
