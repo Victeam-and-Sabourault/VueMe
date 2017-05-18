@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-title :titleImage="src">ÉCLAIRAGE</page-title>
+    <page-title :titleImage="src">éclairage</page-title>
     <md-list class="list-container" v-for="item in itemList" :key="item.title">
       <md-list-item class="item-container">
         <eclairage-list-item :item="item"></eclairage-list-item>              
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import PageTitle from '../Common/PageTitle'
+import PageTitle from '@/components/Common/PageTitle'
 import EclairageListItem from './EclairageListItem'
 import lights from '@/utils/lights'
 

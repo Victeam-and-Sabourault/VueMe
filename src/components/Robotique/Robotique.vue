@@ -1,11 +1,11 @@
 <template>
 <div>
-    <page-title :titleImage="src">ROBOTIQUE</page-title>
+    <page-title :titleImage="src">robotique</page-title>
 </div>
 </template>
 
 <script>
-    import PageTitle from '../Common/PageTitle'
+    import PageTitle from '@/components/Common/PageTitle'
     export default {
         components: {
             PageTitle,

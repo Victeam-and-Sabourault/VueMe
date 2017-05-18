@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Main from '@/components/Main/Main'
 import Robotique from '@/components/Robotique/Robotique'
 import Eclairage from '@/components/Eclairage/Eclairage'
+import Aspirateur from '@/components/Aspirateur/Aspirateur'
+import Cafe from '@/components/Cafe/Cafe'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
@@ -26,6 +28,16 @@ export default new Router({
       path: '/eclairage',
       name: 'Eclairage',
       component: Eclairage
+    },
+    {
+      path: '/aspirateur',
+      name: 'Aspirateur',
+      component: Aspirateur
+    },
+    {
+      path: '/cafe',
+      name: 'Cafe',
+      component: Cafe
     }
   ]
 })
