@@ -1,8 +1,8 @@
 <template>
   <div class="voice-recognizer-container">
-    <music-card @close="isPlayingMusic = false" v-if="isPlayingMusic" />
-    <mail-card @close="isShowingMail=false" :mail="mails[0]" v-if="isShowingMail" />
-    <calendar-card @close="isShowingCalendar=false" :event="events[0]" v-if="isShowingCalendar" />
+    <music-card @close="isPlayingMusic=false" v-if="isPlayingMusic" />
+    <mail-card @close="isShowingMail=false" :mail="mail" v-if="isShowingMail" />
+    <calendar-card @close="isShowingCalendar=false" :event="event" v-if="isShowingCalendar" />
     <weather-card @close="isShowingWeather=false" :weather="weather" v-if="isShowingWeather" />
     <div class="vr-wrapper" v-if="isSupported">
       <button class="ic-voice-container" :class="{active: isListening}" @click="listen">
@@ -43,14 +43,8 @@ export default {
       isListening: false,
       recognizer: null,
       transcription: '',
-      mails: [{
-        title: 'Demande d\'entretien',
-        body: 'Bonjour Monsieur,\nJe me permet de vous contacter bla-bla-bla\nCordialement, Adrien Redon'
-      }],
-      events: [{
-        title: 'rendez-vous gynéco',
-        time: 'à 19:00 !'
-      }],
+      mail: null,
+      event: null,
       weather: {
         city: 'Lyon',
         temp: 0,
@@ -118,17 +112,12 @@ export default {
       console.log('Recognition stopped')
     },
     sendAction () {
-      console.log('oui', this.transcription)
-      if (this.transcription.length < 1) {
-        this.transcription = 'Quel temps fait-il à Lyon'
-      }
       client.textRequest(this.transcription)
         .then(resp => this.handleResponse(resp))
         .catch(err => this.handleError(err))
 
     },
     handleResponse(res) {
-      console.log(res)
       this.isShowingMail = false
       this.isPlayingMusic = false
       this.isShowingCalendar = false
@@ -138,9 +127,9 @@ export default {
       } else if (res.result.action === 'turnOff') {
         lights.turnOff()
       } else if (res.result.action === 'mail') {
-        this.readLastMail()
+        this.readMail(res.result.fulfillment.messages[0].payload)
       } else if (res.result.action === 'calendar') {
-        this.getNextEvent()
+        this.readEvent(res.result.fulfillment.messages[0].payload)
       } else if (res.result.action === 'music') {
         this.playMusic()
       } else if (res.result.action === 'stop') {
@@ -168,16 +157,18 @@ export default {
       window.speechSynthesis.speak(msg)
       typeof callback === "function" ? callback() : null
     },
-    readLastMail () {
+    readMail (mail) {
       this.isShowingMail = true
+      this.mail = mail
       this.speak(
-        'sujet du mail : ' + this.mails[this.mails.length - 1].title,
-        setTimeout(() => this.speak('corps du mail: ' + this.mails[this.mails.length - 1].body), 2000)
+        'sujet du mail : ' + mail.title,
+        setTimeout(() => this.speak('corps du mail: ' + mail.body), 2000)
       )
     },
-    getNextEvent () {
+    readEvent (event) {
       this.isShowingCalendar = true
-      this.speak('Vous avez ' + this.events[0].title + this.events[0].time)
+      this.event = event
+      this.speak('Vous avez ' + event.title + event.time)
     },
     playMusic () {
       this.isPlayingMusic = true

@@ -1,8 +1,8 @@
 <template>
   <docker category="Météo">
-      <h3>La température à {{ weather.city }} est de {{ weatherTemp }}°</h3>
-      <img :src="weatherIcon">
-    </docker>
+    <h3>La température à {{ weather.city }} est de {{ weatherTemp }}°</h3>
+    <img :src="weatherIcon">
+  </docker>
 </template>
 
 <script>

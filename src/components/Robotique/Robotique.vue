@@ -1,27 +1,22 @@
 <template>
-<div>
+  <div>
     <page-title :titleImage="src">robotique</page-title>
-</div>
+  </div>
 </template>
 
 <script>
-    import PageTitle from '@/components/Common/PageTitle'
-    export default {
-        components: {
-            PageTitle,
-        },
-        data() {
-            return {
-            }
-        },
-        computed: {
-            src() {
-                return require('../../assets/icons/ic_robot_w.svg')
-            }
-        },
-        created() {},
-        methods: {},
+import PageTitle from '@/components/Common/PageTitle'
+
+export default {
+  components: {
+    PageTitle,
+  },
+  computed: {
+    src() {
+      return require('../../assets/icons/ic_robot_w.svg')
     }
+  }
+}
 </script>
 
 <style scoped>

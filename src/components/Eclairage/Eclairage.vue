@@ -79,7 +79,7 @@ export default {
 .couleur {
   border-radius: 50%;
   box-sizing: border-box;
-  border: 3px solid #fff;
+  border: 3px solid #FFFFFF;
   box-shadow: 0 2px 4px 0px rgba(0,0,0,0.2);
   height: 80px;
   width: 80px;
@@ -95,7 +95,7 @@ export default {
   background-color: #2D7DE8;
 }
 .couleur-blanc {
-  background-color: white;
+  background-color: #FFFFFF;
 }
 .couleur-rouge {
   background-color: #E82D2D;

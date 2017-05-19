@@ -9,10 +9,7 @@
 
 <script>
 export default {
-  props: ['titleImage'],
-  data() {
-    return {}
-  }
+  props: ['titleImage']
 }
 </script>
 
@@ -32,7 +29,7 @@ h1 {
 }
 
 .title {
-  color: white;
+  color: #FFFFFF;
   margin: 0;
   padding: 0 10px;
   font-family: Helvetica, Arial, sans-serif;

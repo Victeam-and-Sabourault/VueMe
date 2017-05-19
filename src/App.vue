@@ -9,13 +9,14 @@
 </template>
 
 <script>
-import VoiceRecognizer from './components/Common/VoiceRecognizer.vue';
-import VueMeHeader from './components/Common/VueMeHeader.vue';
+import VoiceRecognizer from '@/components/Common/VoiceRecognizer';
+import VueMeHeader from '@/components/Common/VueMeHeader';
+
 export default {
   components: {
     VoiceRecognizer,
-    VueMeHeader,
-  },
+    VueMeHeader
+  }
 }
 </script>
 

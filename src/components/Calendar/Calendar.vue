@@ -1,7 +1,7 @@
 <template>
-  <docker category="Calendrier">
-  <p>{{ eventText }}</p>
-</docker>
+  <docker @close="$emit('close')" category="Calendrier">
+    <p>{{ eventText }}</p>
+  </docker>
 </template>
 
 <script>

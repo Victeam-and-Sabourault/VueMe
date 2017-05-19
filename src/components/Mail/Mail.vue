@@ -1,5 +1,5 @@
 <template>
-  <docker category="Mail">
+  <docker @close="$emit('close')" category="Mail">
     <h3>Objet : {{ mail.title }}</h3>
     <p>Corps : {{ mail.body }}</p>
   </docker>

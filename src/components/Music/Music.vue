@@ -1,5 +1,5 @@
 <template>
-  <docker category="Musique">
+  <docker @close="$emit('close')" category="Musique">
     <audio src="http://www.mfiles.co.uk/mp3-downloads/Dvorak-Symphony9-2-from-the-New-World.mp3" autoplay controls>
     </audio>
     <img src="../../assets/image.jpg">
