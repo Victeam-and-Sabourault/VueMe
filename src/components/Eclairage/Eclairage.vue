@@ -6,12 +6,12 @@
         <eclairage-list-item :item="item"></eclairage-list-item>              
       </md-list-item>
     </md-list>
-    <div class="couleur-picker-container">     
+    <div class="color-picker-container">     
       <h4>Couleur de la lampe</h4>
-      <div class="couleur-picker">
-        <div class="couleur couleur-bleu" @click="bleu()"></div>    
-        <div class="couleur couleur-blanc" @click="blanc()"></div>    
-        <div class="couleur couleur-rouge" @click="rouge()"></div>    
+      <div class="color-picker">
+        <div class="color color-blue" @click="blue()"></div>    
+        <div class="color color-white" @click="white()"></div>    
+        <div class="color color-red" @click="red()"></div>    
       </div>
     </div>     
   </div>
@@ -44,13 +44,13 @@ export default {
   created() {
   },
   methods: {
-    bleu () {
+    blue () {
       lights.turnOn('bleu')
     },
-    blanc () {
-      lights.turnOn('bleu')
+    white () {
+      lights.turnOn('blanc')
     },
-    rouge () {
+    red () {
       lights.turnOn('rouge')
     },
   }
@@ -67,16 +67,16 @@ export default {
   margin-top: 10px;
 }
 
-.couleur-picker-container {
+.color-picker-container {
   padding: 0 16px;
 }
 
-.couleur-picker{
+.color-picker{
   display: flex;
   justify-content: space-around;
 }
 
-.couleur {
+.color {
   border-radius: 50%;
   box-sizing: border-box;
   border: 3px solid #FFFFFF;
@@ -87,21 +87,21 @@ export default {
   transition: all .2s ease;
 }
 
-.couleur:hover {
+.color:hover {
   box-shadow: 0 4px 6px 0px rgba(0,0,0,0.3);
 }
 
-.couleur-bleu {
+.color-blue {
   background-color: #2D7DE8;
 }
-.couleur-blanc {
+.color-white {
   background-color: #FFFFFF;
 }
-.couleur-rouge {
+.color-red {
   background-color: #E82D2D;
 }
 
-.couleur-picker {
+.color-picker {
   list-style: none;
   margin: 0 !important;
   padding: 0;
